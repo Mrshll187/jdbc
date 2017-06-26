@@ -46,11 +46,9 @@ public class Testing {
 		
 		while (results.next()) {
 
-			//System.out.println(JSON + " " + results.getString(JSON));
+			System.out.println(JSON + " " + results.getString(JSON));
 			System.out.println(ID + " " + results.getString(ID));
-			
-			Date dateTime = new Date(results.getLong(DATE));
-			System.out.println(DATE + " " + dateTime.toString());
+			System.out.println(DATE + " " + new Date(results.getLong(DATE)).toString());
 		}
 	}
 }
