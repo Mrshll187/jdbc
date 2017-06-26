@@ -30,6 +30,7 @@ public class Testing {
 		UUID uuid = UUID.randomUUID();
 		long date = new Date().getTime();
 		
+		
 		String sql = "INSERT INTO "+EVENT_TABLE+" ( " + ID + "," + JSON + ", "+DATE+") VALUES ("+uuid.toString()+", ? ," +date+ ") ";
 
 		PreparedStatement statement = connection.prepareStatement(sql);
