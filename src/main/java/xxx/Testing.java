@@ -28,10 +28,9 @@ public class Testing {
 		String payload = IOUtils.toString(Testing.class.getClassLoader().getResourceAsStream("example.json"));
 
 		UUID uuid = UUID.randomUUID();
-		long date = new Date().getTime();
+		long date = new Date().getTime();		
 		
-		
-		String sql = "INSERT INTO "+EVENT_TABLE+" ( " + ID + "," + JSON + ", "+DATE+") VALUES ("+uuid.toString()+", ? ," +date+ ") ";
+		String sql = "INSERT INTO "+EVENT_TABLE+" ( " + ID + "," + JSON + ", "+DATE+") VALUES ( '"+uuid.toString()+"' , ? , " +date+ " ) ";
 
 		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setString(1, payload);
@@ -49,15 +48,9 @@ public class Testing {
 
 			//System.out.println(JSON + " " + results.getString(JSON));
 			System.out.println(ID + " " + results.getString(ID));
-			System.out.println(DATE + " " + results.getLong(DATE));
-		}
-		
-		results = connection.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
-		
-		while(results.next()){
 			
-			System.out.println(results.getString(1));
+			Date dateTime = new Date(results.getLong(DATE));
+			System.out.println(DATE + " " + dateTime.toString());
 		}
-		
 	}
 }
