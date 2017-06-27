@@ -78,6 +78,17 @@ public class DatabaseService {
 		return null;
 	}
 	
+	public boolean update(UUID uuid, String payload) throws SQLException{
+		
+		String sql = "UPDATE "+EVENT_TABLE+" SET" + JSON + "='"+payload+"' WHERE "+ID+"='"+uuid.toString()+"'";
+		int modificationCount = connection.createStatement().executeUpdate(sql);
+		
+		if(modificationCount==1)
+			return true;
+		else
+			return false;
+	}
+	
 	public boolean exists(UUID uuid) throws SQLException{
 		
 		ResultSet results = connection.createStatement().executeQuery("SELECT * FROM "+EVENT_TABLE+" WHERE "+ID+"='"+uuid.toString()+"'");
@@ -92,6 +103,12 @@ public class DatabaseService {
 		
 		UUID uuid = UUID.randomUUID();
 		long date = new Date().getTime();		
+		
+		if(exists(uuid)){
+			
+			update(uuid, payload);
+			return uuid;
+		}
 		
 		String sql = "INSERT INTO "+EVENT_TABLE+" ( " + ID + "," + JSON + ", "+DATE+") VALUES ( '"+uuid.toString()+"' , ? , " +date+ " ) ";
 
